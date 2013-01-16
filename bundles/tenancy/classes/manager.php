@@ -1,4 +1,6 @@
 <?php
+namespace Tenancy;
+use \Laravel;
 
 class Manager
 {
@@ -58,7 +60,7 @@ class Manager
 	 * @param 	string 	$db_pass
 	 * @return 	bool
 	 */
-	public static function make($name, $db_pass)
+	public static function make($name, $db_pass = null)
 	{
 		if ( ! preg_match('/^[a-z0-9]+$/', $name) )
 		{
@@ -66,23 +68,26 @@ class Manager
 			return false;
 		}
 
-		$db_user = $db_name = Config::get('tenancy::options.db_prefix').$name;
+		$db_name = \Laravel\Config::get('tenancy::options.db_prefix').$name;
+		$db_user = \Laravel\Config::get('tenancy::options.db_user');
+		$db_pass = \Laravel\Config::get('tenancy::options.db_pass');
 
 		if (!static::create_tenant_folder($name))
 		{
 			return false;
 		}
 
-		$config = File::get(path('tenants').$name.'/paths.php');	
+		$config = \Laravel\File::get(path('tenants').$name.'/paths.php');	
+		$config = preg_replace("/'TENANT_NAME', '.*'/", "'TENANT_NAME', '{$name}'", $config);	
 		$config = preg_replace("/'DB_NAME', '.*'/", "'DB_NAME', '{$db_name}'", $config);	
 		$config = preg_replace("/'DB_USER', '.*'/", "'DB_USER', '{$db_user}'", $config); 	
 		$config = preg_replace("/'DB_PASS', '.*'/", "'DB_PASS', '{$db_pass}'", $config);
 
-		File::put(path('tenants').$name.'/paths.php', $config);
+		\Laravel\File::put(path('tenants').$name.'/paths.php', $config);
 
-		if (!DB::query("CREATE DATABASE $db_name"))
+		if (!\Laravel\Database::query("CREATE DATABASE $db_name"))
 		{
-			throw new Exception("ERROR! Could not create the database!");
+			throw new Tenancy\Exception("ERROR! Could not create the database!");
 			return false;
 		}
 
@@ -145,14 +150,37 @@ class Manager
 			
 		static::remove_tenant_folder($name);
 
-		$db_name = Config::get('tenancy::options.db_prefix').$name;
+		$db_name = \Laravel\Config::get('tenancy::options.db_prefix').$name;
 			
-		if ( ! DB::query("DROP DATABASE $db_name") )
+		if ( ! \Laravel\Database::query("DROP DATABASE $db_name") )
 		{
 			throw new Exception("ERROR! Could not drop the database!");
 		}
 
 		return true;
+	}
+
+	/**
+	 * Make /tenants/{name}/storage directory writable by web server
+	 * It's recursive
+	 * 
+	 * @return void 
+	 */
+	private static function make_writable($path)
+	{
+		$exclude = array('.', '..'); 
+		$dir = @opendir($path); 
+		
+		while( ($file = readdir($dir) ) !== false )
+		{
+			if( ! in_array($file, $exclude) AND is_dir("$path/$file") )
+			{
+				chmod("$path/$file", 0777);
+
+				// recurse
+				static::make_writable("$path/$file");
+			}
+		} 
 	}
 
 	/**
@@ -167,8 +195,12 @@ class Manager
 		{
 			throw new Exception("ERROR! Could not create new tenant directory '$name'! Make sure this name is unique.");
 		}
-		
-		return File::cpdir(path('tenants').'default', path('tenants').$name);
+
+		$tenant_path = path('tenants').$name;
+		$result = \Laravel\File::cpdir(path('tenants').'default', $tenant_path);
+		static::make_writable($tenant_path.'/storage');
+	
+		return $result;		
 	}
 
 	/**
@@ -190,6 +222,6 @@ class Manager
 			return false;
 		}
 	
-		return File::rmdir(path('tenants').$name);
+		return \Laravel\File::rmdir(path('tenants').$name);
 	}
 }

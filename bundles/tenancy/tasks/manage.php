@@ -38,7 +38,7 @@ class Tenancy_Manage_Task {
 	{
 		try
 		{
-			Manager::show();
+			\Tenancy\Manager::show();
 		}
 		catch (Exception $e)
 		{
@@ -78,7 +78,7 @@ class Tenancy_Manage_Task {
 
 		try
 		{
-			Manager::make($name, $db_pass);
+			\Tenancy\Manager::make($name, $db_pass);
 			echo "DONE! New tenant ($name) added to the system.";
 		}
 		catch (Exception $e)
@@ -112,7 +112,7 @@ class Tenancy_Manage_Task {
 
 		try
 		{
-			Manager::update($name, $new_pass);
+			\Tenancy\Manager::update($name, $new_pass);
 		}
 		catch (Exception $e)
 		{
@@ -144,7 +144,7 @@ class Tenancy_Manage_Task {
 
 		try
 		{
-			Manager::update($name, $new_pass);
+			\Tenancy\Manager::update($name, $new_pass);
 			echo "DONE! Tenant ($name) password has been updated.";
 		}
 		catch (Exception $e)
@@ -179,7 +179,7 @@ class Tenancy_Manage_Task {
 
 		try
 		{
-			Manager::remove($args);
+			\Tenancy\Manager::remove($args);
 			echo "DONE! Tenant(s) removed from the system.";
 		}
 		catch (Exception $e)

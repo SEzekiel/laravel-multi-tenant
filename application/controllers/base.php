@@ -3,6 +3,14 @@
 class Base_Controller extends Controller {
 
 	/**
+	 * Base controller should be RESTful
+	 * 
+	 * @var bool $restful
+	 */
+	public $restful = true;
+
+	
+	/**
 	 * Catch-all method for requests that can't be matched.
 	 *
 	 * @param  string    $method

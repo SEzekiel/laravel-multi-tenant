@@ -82,7 +82,9 @@ return array(
 	|
 	*/
 
-	'custom' => array(),
+	'custom' => array(
+		'old_password_valid' => 'Your old password is incorrect.',
+		),
 
 	/*
 	|--------------------------------------------------------------------------

@@ -171,3 +171,10 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 {
 	Session::load();
 }
+
+
+// Custom start files
+require __DIR__ . DS . 'start' . DS . 'autoloading.php';
+require __DIR__ . DS . 'start' . DS . 'filters.php';
+require __DIR__ . DS . 'start' . DS . 'composers.php';
+require __DIR__ . DS . 'start' . DS . 'validation.php';

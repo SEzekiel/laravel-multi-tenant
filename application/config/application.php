@@ -39,7 +39,7 @@ return array(
 	|
 	*/
 
-	'index' => 'index.php',
+	'index' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKeyGoesHere!',
+	'key' => 'kfdsjnckdfnvjkdgvkjdnsgvd!',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ return array(
 	'aliases' => array(
 		'Auth'       	=> 'Laravel\\Auth',
 		'Authenticator' => 'Laravel\\Auth\\Drivers\\Driver',
-		'Asset'      	=> 'Laravel\\Asset',
+		'Asset'      	=> 'Tenancy\\Asset',
 		'Autoloader' 	=> 'Laravel\\Autoloader',
 		'Blade'      	=> 'Laravel\\Blade',
 		'Bundle'     	=> 'Laravel\\Bundle',
@@ -164,7 +164,8 @@ return array(
 		'Cookie'     	=> 'Laravel\\Cookie',
 		'Crypter'    	=> 'Laravel\\Crypter',
 		'DB'         	=> 'Laravel\\Database',
-		'Eloquent'   	=> 'Laravel\\Database\\Eloquent\\Model',
+		// 'Eloquent'   	=> 'Laravel\\Database\\Eloquent\\Model',
+		'Eloquent'   	=> 'Tenancy\\Eloquent',
 		'Event'      	=> 'Laravel\\Event',
 		'File'       	=> 'Laravel\\File',
 		'Filter'     	=> 'Laravel\\Routing\\Filter',
@@ -178,8 +179,8 @@ return array(
 		'Memcached'  	=> 'Laravel\\Memcached',
 		'Paginator'  	=> 'Laravel\\Paginator',
 		'Profiler'  	=> 'Laravel\\Profiling\\Profiler',
-		'URL'        	=> 'Laravel\\URL',
-		'Redirect'   	=> 'Laravel\\Redirect',
+		'URL'        	=> 'Tenancy\\URL',
+		'Redirect'   	=> 'Tenancy\\Redirect',
 		'Redis'      	=> 'Laravel\\Redis',
 		'Request'    	=> 'Laravel\\Request',
 		'Response'   	=> 'Laravel\\Response',
@@ -193,6 +194,30 @@ return array(
 		'URI'        	=> 'Laravel\\URI',
 		'Validator'  	=> 'Laravel\\Validator',
 		'View'       	=> 'Laravel\\View',
+
+		'Alert'          => 'Bootstrapper\\Alert',
+		'Badge'          => 'Bootstrapper\\Badge',
+		'Breadcrumb'     => 'Bootstrapper\\Breadcrumb',
+		'Button'         => 'Bootstrapper\\Button',
+		'ButtonGroup'    => 'Bootstrapper\\ButtonGroup',
+		'ButtonToolbar'  => 'Bootstrapper\\ButtonToolbar',
+		'Carousel'       => 'Bootstrapper\\Carousel',
+		'DropdownButton' => 'Bootstrapper\\DropdownButton',
+		'Form'           => 'Bootstrapper\\Form',
+		'Helpers'        => 'Bootstrapper\\Helpers',
+		'Icon'           => 'Bootstrapper\\Icon',
+		'Image'          => 'Bootstrapper\\Image',
+		'Label'          => 'Bootstrapper\\Label',
+		'MediaObject'    => 'Bootstrapper\\MediaObject',
+		'Navbar'         => 'Bootstrapper\\Navbar',
+		'Navigation'     => 'Bootstrapper\\Navigation',
+		'Paginator'      => 'Bootstrapper\\Paginator',
+		'Progress'       => 'Bootstrapper\\Progress',
+		'Tabbable'       => 'Bootstrapper\\Tabbable',
+		'Table'          => 'Bootstrapper\\Table',
+		'Thumbnail'      => 'Bootstrapper\\Thumbnail',
+		'Typeahead'      => 'Bootstrapper\\Typeahead',
+		'Typography'     => 'Bootstrapper\\Typography',
 	),
 
 );

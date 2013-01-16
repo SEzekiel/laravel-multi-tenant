@@ -116,3 +116,5 @@ function set_path($path, $value)
 {
 	$GLOBALS['laravel_paths'][$path] = $value;
 }
+
+define('TENANT_NAME', null);

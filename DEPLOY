@@ -1,0 +1,55 @@
+
+Requirements & Assumptions:
+- Linux/Unix server
+- PHP 5.3+ (Laravel's minimum requirement) with Apache mod_rewrite enabled
+- The main domain name is multisite.com
+- All subdomain (http://*.multisite.com) are directed to the same IP. 
+- Every tenants have their own database
+- Every tenants have public directory at /tenants/{username}/public
+- The rootsite (http://multisite.com, without subdomain) public directory (for serving static assets that can be accessed by any tenants) should be set to /public
+
+1. Put `multisite` directory CONTENT into your document root (for example: /var/www/)
+
+	example:
+	www/
+	 - application/
+	 - bundles/
+	 - laravel/
+	 - public/
+	 - tenants/
+	 - paths.php
+	 - DEPLOY
+	 - ... etc
+
+ 2. We must have at least one MySQL user that has privilage to CREATE a new DATABASE (Say it USER A), and optionally an additional MySQL user (USER B) for tenants to use.
+
+ 3. Change these lines in /application/config/database.php according to USER A credential:
+
+	'root' => array(
+		'driver'   => 'mysql',
+		'host'     => 'localhost',
+		'database' => 'multisite',
+		'username' => 'root',
+		'password' => 'root',
+		'charset'  => 'utf8',
+		'prefix'   => '',
+	),
+
+4. Put the USER B credential to /bundles/tenancy/config/options.php (it can be same as USER A)
+
+	return array(
+		'db_prefix' => 'site_',
+		'db_user'   => 'root',
+		'db_pass'   => 'root',
+	);
+
+5. Set up the DB migration table. Open the command line shell, go to the root directory (/var/www) and type:
+
+	php artisan migrate:install
+	php artisan session:table
+	php artisan migrate
+
+	This step will create the required migration and session table then automatically generate 
+	the `users` table on the database you choose before in step 3
+
+6. Navigate to http://multisite.com/register for create a new user

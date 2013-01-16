@@ -42,7 +42,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'root',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,12 +67,23 @@ return array(
 			'prefix'   => '',
 		),
 
-		'mysql' => array(
+		'root' => array(
 			'driver'   => 'mysql',
 			'host'     => 'localhost',
-			'database' => defined('DB_NAME') ? DB_NAME : 'database',
+			'database' => 'multisite',
+			'username' => 'root',
+			'password' => '',
+			'charset'  => 'utf8',
+			'prefix'   => 'root_',
+		),
+
+		// DB connection for currently viewed tenant
+		'current' => array(
+			'driver'   => 'mysql',
+			'host'     => 'localhost',
+			'database' => defined('DB_NAME') ? DB_NAME : 'multisite',
 			'username' => defined('DB_USER') ? DB_USER : 'root',
-			'password' => defined('DB_PASS') ? DB_PASS : '',
+			'password' => defined('DB_PASS') ? DB_PASS : 'root',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 		),
